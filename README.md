@@ -1,5 +1,5 @@
 # BibRecordCleaner
-Javascript scripts for cleaning bibliographic data (good for Google Sheets)
+Javascript scripts for cleaning bibliographic data (good for Google Sheets). To use these functions in a Google Sheet that you own, go to Extensions > AppScripts and paste the `AppScript.js` file into the AppScript editor and save it. Then you can use the following scripts in your Google Sheets formulas as shown below in the examples.
 
 CleanAuthorString(str) - removes cruft from end of author string
 CleanTitleString(str) - removes cruft from end of title string
