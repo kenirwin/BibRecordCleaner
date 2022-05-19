@@ -1,12 +1,14 @@
 // Scripts for cleaning bibliographic data
 // Author: Ken Irwin, irwinkr@miamioh.edu
-// Version: 0.1.1
+// Version: 0.2
 // Date: 2022-05-19
 
 /* three scripts:
 CleanAuthorString(str) - removes cruft from end of author string
 CleanTitleString(str) - removes cruft from end of title string
 FirstISN(input) - returns first 8-13 digit string from a string or integer input
+plus: 
+TestClean() tests some (but not all) title conditions
 */
 
 function TestClean() {
@@ -14,7 +16,11 @@ function TestClean() {
     'Messenger;"I am the messenger / by Markus Zusak"',
     'Babar en famille. English;"Babar and his children   translated from the French by Merle Haas"',
     'Short stories. English. Selections;"When Shlemiel went to Warsaw & other stories / Isaac Bashevis Singer   pictures by Margot Zemach   translated by the author and Elizabeth Shub"',
-  
+    'Dr Q. Written by Peter David',
+  'Cat in the Hat illustrated by Dr. Seuss',
+  'Forty-two stories. Translated from the Danish by M.R. James.',
+  'Four & twenty blackbirds  nursery rhymes of yesterday recalled for children of to-day  collected by Helen Dean Fish,',
+'A family book of nursery rhymes, gathered by Iona and Peter Opie. With'
   ];
   arr.forEach(str => console.log(CleanTitleString(str)));
 }
@@ -53,97 +59,27 @@ function CleanTitleString(str) {
     str = str.replace(re,'$1');
   }
 
- // remove the "/ authorname"
-  re = /(.*) \/.*/;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
+  // patterns to lop off after the first part
+  // all should end with .* wildcard
+  regexes = [
+    /(.*) \/.*/, // everything after the slash / authorname
+    /(.*) (compiled|edited|written|selected|collected|prepared|gathered|selected and arranged|special photography|retold|shortened and simplified) by .*/i,
+    /(.*) written and illus.*/i,
+    /(.*) trans(\.|lated) .* by .*/i,
+    /(.*) selected and arranged.*/i,
+    /(.*) (with )*(original )*(drawings|illus|pictures).* by .*/i,
+    /(.*)\. with .*/i, // any "with" after a period
+    /(.*) \[by\].*/i, // remove [by] ...
+    /(.*)[\:\,] by.*/i, // remove ": by
+    /(.*), *$/, // remove trailing commas
+  ];
 
-  // remove "written and illustrated by..."
-  re = /(.*) written and illus.*/i;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
-
-  // remove "selected and arrange by..."
-  re = /(.*) selected and arranged.*/i;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
-
-  // remove "with illus by..."
-  re = /(.*) with illus.* by .*/i;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
-
-  // remove "with drawings by..."
-  re = /(.*) with drawings.* by .*/i;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
-
-  // remove "with the original illus by..."
-  re = /(.*) with original illus.*/i;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
-
-  // remove "with the original illus by..."
-  re = /(.*) with original illus.*/i;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
-
-  // remove "illustrated by..."
-  re = /(.*) illustrated by.*/i;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
-
-  // remove "illus. by..."
-  re = /(.*) illus\.* by.*/i;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
-
-  // remove [by] ...
-  re = /(.*) \[by\].*/;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
-
-  // remove . Pictures by
-  re = /(.*)\. [pP]ictures by.*/;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
-
-  // remove . Translated by
-  re = /(.*)\. [tT]ranslated by.*/;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
-
-  // remove . Written by
-  re = /(.*)\. [wW]ritten by.*/;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
-
-  // remove . Compiled by
-  re = /(.*)\. [cC]ompiled by.*/;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
-
-  // remove ": by "
-  re = /(.*)[\:\,] by.*/;
-  if (str.match(re)) {
-    str = str.replace(re,'$1');
-  }
-
-
+// foreach of these regexes, lop off everything after the first part:
+  regexes.forEach(re => {
+    if (str.match(re)) {
+      str = str.replace(re, '$1')
+    }
+  })
 
   return str;
 }
