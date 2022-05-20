@@ -17,46 +17,45 @@ function TestClean() {
     'Babar en famille. English;"Babar and his children   translated from the French by Merle Haas"',
     'Short stories. English. Selections;"When Shlemiel went to Warsaw & other stories / Isaac Bashevis Singer   pictures by Margot Zemach   translated by the author and Elizabeth Shub"',
     'Dr Q. Written by Peter David',
-  'Cat in the Hat illustrated by Dr. Seuss',
-  'Forty-two stories. Translated from the Danish by M.R. James.',
-  'Four & twenty blackbirds  nursery rhymes of yesterday recalled for children of to-day  collected by Helen Dean Fish,',
-'A family book of nursery rhymes, gathered by Iona and Peter Opie. With'
+    'Cat in the Hat illustrated by Dr. Seuss',
+    'Forty-two stories. Translated from the Danish by M.R. James.',
+    'Four & twenty blackbirds  nursery rhymes of yesterday recalled for children of to-day  collected by Helen Dean Fish,',
+    'A family book of nursery rhymes, gathered by Iona and Peter Opie. With',
   ];
-  arr.forEach(str => console.log(CleanTitleString(str)));
+  arr.forEach((str) => console.log(CleanTitleString(str)));
 }
 
 function CleanAuthorString(str) {
   //remove ", author"
   let re = /(.*), author/;
   if (str.match(re)) {
-    str = str.replace(re,'$1');
+    str = str.replace(re, '$1');
   }
 
   //remove ", illustrator"
   re = /(.*), illustrator/;
   if (str.match(re)) {
-    str = str.replace(re,'$1');
+    str = str.replace(re, '$1');
   }
   //remove ", dddd-?"
   re = /(.*), \d\d\d\d.*/;
-    if (str.match(re)) {
-    str = str.replace(re,'$1');
+  if (str.match(re)) {
+    str = str.replace(re, '$1');
   }
   return str;
 }
 
 function CleanTitleString(str) {
-
   // remove original title on translated works
   re = /(.*)\. English([^;]*); *\"*(.+)\"*/;
   if (str.match(re)) {
-    str = str.replace(re,'$3');
+    str = str.replace(re, '$3');
   }
 
   // remove some uniform title cruft
   re = /.+;\"(.*)/;
   if (str.match(re)) {
-    str = str.replace(re,'$1');
+    str = str.replace(re, '$1');
   }
 
   // patterns to lop off after the first part
@@ -74,12 +73,12 @@ function CleanTitleString(str) {
     /(.*), *$/, // remove trailing commas
   ];
 
-// foreach of these regexes, lop off everything after the first part:
-  regexes.forEach(re => {
+  // foreach of these regexes, lop off everything after the first part:
+  regexes.forEach((re) => {
     if (str.match(re)) {
-      str = str.replace(re, '$1')
+      str = str.replace(re, '$1');
     }
-  })
+  });
 
   return str;
 }
@@ -88,8 +87,16 @@ function FirstISN(input) {
   let str = String(input);
   let re = /(\d{8,13}).*/;
   if (str.match(re)) {
-    return str.replace(re,'$1');
+    return str.replace(re, '$1');
   }
   return str;
 }
 
+if (typeof module !== 'undefined') {
+  module.exports = {
+    CleanAuthorString,
+    CleanTitleString,
+    FirstISN,
+    TestClean,
+  };
+}

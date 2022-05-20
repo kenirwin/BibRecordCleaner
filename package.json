@@ -1,0 +1,26 @@
+{
+  "name": "bib-record-cleaner",
+  "version": "0.2.1",
+  "description": "Clean data coming out of bibliographic record exports",
+  "main": "AppScript.js",
+  "scripts": {
+    "test": "node tester.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenirwin/BibRecordCleaner.git"
+  },
+  "keywords": [
+    "bib",
+    "records",
+    "ils",
+    "data",
+    "cleaning"
+  ],
+  "author": "Ken Irwin, irwinkr@miamioh.edu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kenirwin/BibRecordCleaner/issues"
+  },
+  "homepage": "https://github.com/kenirwin/BibRecordCleaner#readme"
+}
