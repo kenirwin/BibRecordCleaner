@@ -13,7 +13,11 @@ TestClean() tests some (but not all) title conditions
 
 function TestClean() {
   arr = [
+    'When dinosaurs die : a guide to understanding death / Laurie Krasny Brown and Marc Brown',
     'Messenger;"I am the messenger / by Markus Zusak"',
+    "Lions 'n' tigers 'n' everything, by Courtney Ryley Cooper illustrated from photographs",
+    'Taxis and toadstools verses and decorations, by Rachel Field',
+    'My friend Flicka. With illus. by John Steuart Curry',
     'Babar en famille. English;"Babar and his children   translated from the French by Merle Haas"',
     'Short stories. English. Selections;"When Shlemiel went to Warsaw & other stories / Isaac Bashevis Singer   pictures by Margot Zemach   translated by the author and Elizabeth Shub"',
     'Dr Q. Written by Peter David',
@@ -70,6 +74,7 @@ function CleanTitleString(str) {
     /(.*)\. with .*/i, // any "with" after a period
     /(.*) \[by\].*/i, // remove [by] ...
     /(.*)[\:\,] by.*/i, // remove ": by
+    /(.*)[\.\:\,] with$/i, // remove trailing with
     /(.*), *$/, // remove trailing commas
   ];
 
